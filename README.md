@@ -31,8 +31,11 @@ Add exec allowlist entries for `python3` and the absolute script paths (see `SKI
 ## Quick test
 
 ```bash
-python3 scripts/nearby.py --lat -22.722279 --lon -45.561974 --radius 150
-python3 scripts/nearby.py --lat -22.722279 --lon -45.561974 --radius 150 --focus tourist
+# Default pin mode (~35 m immediate + ~450 m highlights)
+python3 scripts/nearby.py --lat -22.722279 --lon -45.561974
+
+# Legacy single-radius list
+python3 scripts/nearby.py --lat -22.722279 --lon -45.561974 --mode legacy --radius 100
 ```
 
 ## Paths (portable)

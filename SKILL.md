@@ -27,7 +27,7 @@ If unset, substitute the absolute path to your install (e.g. `…/workspace/skil
 
 | Mode | Trigger | Behavior |
 |------|---------|----------|
-| **One-shot** | Single location pin or “o que tem perto?” | One list within **100 m** (default) |
+| **One-shot (pin)** | Single location pin or “what’s in front of me?” | **~35 m** immediate ring + **~450 m** notable sights |
 | **Walk guide** | `modo passeio`, `walk guide`, `/walk` + **live location** | Automatic alerts every **100 m** or **5 min** for **tourist/historic** POIs |
 
 ---
@@ -38,16 +38,25 @@ If unset, substitute the absolute path to your install (e.g. `…/workspace/skil
 2. Run with the **absolute script path** (required for exec allowlist — do **not** use `cd … &&`):
 
 ```bash
-python3 "${SKILL_ROOT}/scripts/nearby.py" --lat <LAT> --lon <LON> --radius 100
+python3 "${SKILL_ROOT}/scripts/nearby.py" --lat <LAT> --lon <LON>
 ```
 
-For tourist/historic only:
+Default **`--mode pin`** (no extra flags needed):
+
+| Section | Radius | Content |
+|---------|--------|---------|
+| **Right where you are** | **35 m** | Closest first; **historic/tourist before** restaurants/shops; restaurants show **cuisine/type** (and **rating** when tagged in OSM) |
+| **Notable a bit further** | **450 m** | Major tourist/historic only (museums, monuments, heritage, wikidata landmarks) |
+
+Chains like McDonald’s get a short label only. No direction — user may be facing any way.
+
+Legacy single-radius list:
 
 ```bash
-python3 "${SKILL_ROOT}/scripts/nearby.py" --lat <LAT> --lon <LON> --radius 150 --focus tourist
+python3 "${SKILL_ROOT}/scripts/nearby.py" --lat <LAT> --lon <LON> --mode legacy --radius 100
 ```
 
-3. Reply with script output. Do not invent places.
+3. Reply with script output. Do not invent places or ratings.
 
 ---
 
@@ -100,8 +109,11 @@ python3 "${SKILL_ROOT}/scripts/walk_guide.py" update --chat-id <CHAT_ID> --lat L
 | Flag | Meaning |
 |------|---------|
 | `--lat`, `--lon` | Required WGS84 coordinates |
-| `--radius` | Meters (default **100**, max **2000**) |
-| `--focus` | `all` (default) or `tourist` |
+| `--mode` | `pin` (default) or `legacy` |
+| `--immediate-radius` | Pin mode close ring (default **35** m) |
+| `--highlight-radius` | Pin mode wider ring (default **450** m) |
+| `--radius` | Legacy mode only (default **100**, max **2000**) |
+| `--focus` | Legacy mode: `all` or `tourist` |
 | `--json` | JSON output |
 | `--no-geocode` | Skip reverse geocoding |
 

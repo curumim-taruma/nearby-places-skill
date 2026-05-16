@@ -11,6 +11,11 @@ from typing import Any
 
 DEFAULT_RADIUS_M = 100
 DEFAULT_MAX_RESULTS = 40
+PIN_IMMEDIATE_RADIUS_M = 35
+PIN_HIGHLIGHT_RADIUS_M = 450
+PIN_IMMEDIATE_MAX = 12
+PIN_HIGHLIGHT_MAX = 5
+PIN_HIGHLIGHT_MIN_DISTANCE_M = 50
 OVERPASS_URLS = (
     "https://overpass.kumi.systems/api/interpreter",
     "https://overpass-api.de/api/interpreter",
